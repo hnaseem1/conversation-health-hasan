@@ -1,14 +1,15 @@
 import ForcastTable from "./ForcastTable.jsx";
 import React from "react";
 import ForcastButton from "./ForcastButton.jsx";
-export default function ForcastTableWithToggle() {
+export default function ForcastTableWithToggle(props) {
   const [toggle, setToggle] = React.useState(false);
+  const id = props.id
 
   const ForcastTableElements = () => {
     return (
       <div>
         <ForcastButton text="Close" setToggle={setToggle} toggle={toggle} />
-        <ForcastTable />
+        <ForcastTable id={id}/>
       </div>
     );
   };

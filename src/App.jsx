@@ -29,7 +29,7 @@ export default function App() {
       <h5>Fetches Information every min</h5>
       <CityListDropDown data={cityList} />
       <CityForcastDetail id={6094817} />
-      <ForcastTableWithToggle />
+      <ForcastTableWithToggle id={6094817}/>
     </div>
   );
 }

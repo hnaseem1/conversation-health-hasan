@@ -1,4 +1,3 @@
-'use strict';
 import axios from "axios";
 
 export default async function getDetails(id, setData) {
@@ -7,7 +6,6 @@ export default async function getDetails(id, setData) {
     const response = await axios.get(url, { crossdomain: true });
     setData(response.data)
   } catch (error) {
-    console.log(url);
     console.error(error);
   }
 }

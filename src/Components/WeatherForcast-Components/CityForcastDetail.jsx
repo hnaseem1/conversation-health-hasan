@@ -19,9 +19,9 @@ export default function CityForcastDetail(props) {
         m={1}
         bgcolor="background.paper"
       >
-        {data.weather[0].main}
+        {data?.weather[0].main}
         <br />
-        {data.weather[0].description}
+        {data?.weather[0].description}
       </Box>
       <Box
         component="span"
@@ -30,9 +30,9 @@ export default function CityForcastDetail(props) {
         m={1}
         bgcolor="background.paper"
       >
-        {data.main.temp} K
+        {data?.main.temp} K
         <br />
-        Wind {data.wind.speed} m/sec
+        Wind {data?.wind.speed} m/sec
       </Box>
     </div>
   );

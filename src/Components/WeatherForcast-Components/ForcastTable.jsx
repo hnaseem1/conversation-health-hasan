@@ -7,6 +7,7 @@ import TableContainer from "@material-ui/core/TableContainer";
 import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
 import Paper from "@material-ui/core/Paper";
+import getCityWeatherDataList from "../../Services/CityWeatherByDate"
 
 const useStyles = makeStyles({
   table: {
@@ -26,8 +27,16 @@ const rows = [
   createData("Gingerbread", 356, 16.0, 49, 3.9, "Medium")
 ];
 
-export default function DenseTable() {
+export default function DenseTable(props) {
   const classes = useStyles();
+  const [data, setData] = React.useState()
+  const id = props.id
+
+  React.useEffect(() => {
+    getCityWeatherDataList(id, setData)
+    console.log(id)
+    console.log(data)
+  }, [])
 
   return (
     <TableContainer component={Paper}>
