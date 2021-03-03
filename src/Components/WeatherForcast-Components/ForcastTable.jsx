@@ -27,16 +27,39 @@ const rows = [
   createData("Gingerbread", 356, 16.0, 49, 3.9, "Medium")
 ];
 
+// filterByDate
+const filterByDate = (date, data) => data?.list?.filter((w) => w?.dt_txt.includes(date))
+
+// findAllDates ["2021-03-03", "2021-03-04", "2021-03-05"]
+const dates = (data) => data?.list?.map((w) => w?.dt_txt)
+
+const uniqueDates = (datesArray) => {
+  const returnObj = {}
+  datesArray.forEach((e) => {
+    const key = e.split(" ")[0]
+    if (returnObj[key]) {
+      returnObj[key] = 0
+    } else {
+      returnObj[key] = returnObj[key] + 1
+    }
+  })
+  return Object.keys(returnObj)
+}
+
 export default function DenseTable(props) {
   const classes = useStyles();
   const [data, setData] = React.useState()
   const id = props.id
 
   React.useEffect(() => {
-    getCityWeatherDataList(id, setData)
-    console.log(id)
-    console.log(data)
-  }, [])
+    data ?? getCityWeatherDataList(id, setData)
+    if (data){
+      //console.log(data)
+      //console.log(dates(data))
+      //console.log(filterByDate("2021-03-03", data))
+      console.log(uniqueDates(dates(data)))
+    }
+  }, [data])
 
   return (
     <TableContainer component={Paper}>
