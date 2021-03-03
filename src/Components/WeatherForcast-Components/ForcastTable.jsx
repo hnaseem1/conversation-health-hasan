@@ -15,17 +15,26 @@ const useStyles = makeStyles({
   }
 });
 
-function createData(name, calories, fat, carbs, protein, desc) {
-  return { name, calories, fat, carbs, protein, desc };
+function createData(date, temp, minTemp, maxTemp, wind, desc) {
+  //console.log(date, temp, minTemp, maxTemp, wind, desc)
+  return { date, temp, minTemp, maxTemp, wind, desc };
 }
 
-const rows = [
-  createData("Frozen yoghurt", 159, 6.0, 24, 4.0, "High"),
-  createData("Ice cream sandwich", 237, 9.0, 37, 4.3, "Low"),
-  createData("Eclair", 262, 16.0, 24, 6.0, "High"),
-  createData("Cupcake", 305, 3.7, 67, 4.3, "High"),
-  createData("Gingerbread", 356, 16.0, 49, 3.9, "Medium")
-];
+// const rows = [
+//   createData("Frozen yoghurt", 159, 6.0, 24, 4.0, "High"),
+//   createData("Ice cream sandwich", 237, 9.0, 37, 4.3, "Low"),
+//   createData("Eclair", 262, 16.0, 24, 6.0, "High"),
+//   createData("Cupcake", 305, 3.7, 67, 4.3, "High"),
+//   createData("Gingerbread", 356, 16.0, 49, 3.9, "Medium")
+// ];
+
+const generateRowsForCityWithId = (data, date, filterHelper, rowCreator) => {
+  const filtered = filterHelper(date, data)
+  const rows = filtered.map((row) => {
+    return rowCreator(row.dt_txt.split(" ")[1], row.main.temp, row.main.temp_min, row.main.temp_max, row.wind.speed, row.weather[0].description)
+  })
+  return rows
+}
 
 // filterByDate
 const filterByDate = (date, data) => data?.list?.filter((w) => w?.dt_txt.includes(date))
@@ -49,15 +58,20 @@ const uniqueDates = (datesArray) => {
 export default function DenseTable(props) {
   const classes = useStyles();
   const [data, setData] = React.useState()
+  const[rows, setRows] = React.useState()
+  const[date, setDate] = React.useState("")
   const id = props.id
 
   React.useEffect(() => {
     data ?? getCityWeatherDataList(id, setData)
     if (data){
+      setDate(uniqueDates(dates(data))[0])
       //console.log(data)
       //console.log(dates(data))
       //console.log(filterByDate("2021-03-03", data))
-      console.log(uniqueDates(dates(data)))
+      //console.log(uniqueDates(dates(data)))
+      //console.log(generateRowsForCityWithId(data, "2021-03-03", filterByDate, createData))
+      setRows(generateRowsForCityWithId(data, "2021-03-05", filterByDate, createData))
     }
   }, [data])
 
@@ -75,16 +89,16 @@ export default function DenseTable(props) {
           </TableRow>
         </TableHead>
         <TableBody>
-          {rows.map((row) => (
-            <TableRow key={row.name}>
+          {rows?.map((row) => (
+            <TableRow key={row?.name}>
               <TableCell component="th" scope="row">
-                {row.name}
+                {row?.date}
               </TableCell>
-              <TableCell align="right">{row.calories}</TableCell>
-              <TableCell align="right">{row.fat}</TableCell>
-              <TableCell align="right">{row.carbs}</TableCell>
-              <TableCell align="right">{row.protein}</TableCell>
-              <TableCell align="right">{row.desc}</TableCell>
+              <TableCell align="right">{row?.temp}</TableCell>
+              <TableCell align="right">{row?.minTemp}</TableCell>
+              <TableCell align="right">{row?.maxTemp}</TableCell>
+              <TableCell align="right">{row?.wind}</TableCell>
+              <TableCell align="right">{row?.desc}</TableCell>
             </TableRow>
           ))}
         </TableBody>

@@ -19,10 +19,10 @@ const useStyles = makeStyles((theme) =>
 );
 
 export default function CityListDropDown(props) {
+  const cityJsonList = props.data;
   const classes = useStyles();
   const [city, setCity] = React.useState("");
   const [open, setOpen] = React.useState(false);
-  const cityJsonList = props.data;
 
   const handleChange = (event) => {
     setCity(event.target.value);
