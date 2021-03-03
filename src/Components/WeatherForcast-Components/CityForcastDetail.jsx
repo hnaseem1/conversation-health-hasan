@@ -1,14 +1,8 @@
 import React from "react";
 import Box from "@material-ui/core/Box";
-import getDetails from "../../Services/CityForecast";
 
 export default function CityForcastDetail(props) {
-  const id = props.id;
-  const [data, setData] = React.useState();
-
-  React.useEffect(() => {
-    getDetails(id, setData);
-  }, []);
+  const data = props.data;
 
   return (
     <div style={{ width: "100%" }}>

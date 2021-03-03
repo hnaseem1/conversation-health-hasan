@@ -7,7 +7,7 @@ import TableContainer from "@material-ui/core/TableContainer";
 import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
 import Paper from "@material-ui/core/Paper";
-import getCityWeatherDataList from "../../Services/CityWeatherByDate"
+import DateButtons from "./DateButtons"
 
 const useStyles = makeStyles({
   table: {
@@ -16,21 +16,12 @@ const useStyles = makeStyles({
 });
 
 function createData(date, temp, minTemp, maxTemp, wind, desc) {
-  //console.log(date, temp, minTemp, maxTemp, wind, desc)
   return { date, temp, minTemp, maxTemp, wind, desc };
 }
 
-// const rows = [
-//   createData("Frozen yoghurt", 159, 6.0, 24, 4.0, "High"),
-//   createData("Ice cream sandwich", 237, 9.0, 37, 4.3, "Low"),
-//   createData("Eclair", 262, 16.0, 24, 6.0, "High"),
-//   createData("Cupcake", 305, 3.7, 67, 4.3, "High"),
-//   createData("Gingerbread", 356, 16.0, 49, 3.9, "Medium")
-// ];
-
 const generateRowsForCityWithId = (data, date, filterHelper, rowCreator) => {
   const filtered = filterHelper(date, data)
-  const rows = filtered.map((row) => {
+  const rows = filtered?.map((row) => {
     return rowCreator(row.dt_txt.split(" ")[1], row.main.temp, row.main.temp_min, row.main.temp_max, row.wind.speed, row.weather[0].description)
   })
   return rows
@@ -55,27 +46,20 @@ const uniqueDates = (datesArray) => {
   return Object.keys(returnObj)
 }
 
-export default function DenseTable(props) {
+export default function ForecastTable(props) {
   const classes = useStyles();
-  const [data, setData] = React.useState()
+  const data = props.data
   const[rows, setRows] = React.useState()
-  const[date, setDate] = React.useState("")
-  const id = props.id
+  const [date, setDate] = React.useState(uniqueDates(dates(data))[0])
+  const[datesArr, setDates] = React.useState([])
 
   React.useEffect(() => {
-    data ?? getCityWeatherDataList(id, setData)
-    if (data){
-      setDate(uniqueDates(dates(data))[0])
-      //console.log(data)
-      //console.log(dates(data))
-      //console.log(filterByDate("2021-03-03", data))
-      //console.log(uniqueDates(dates(data)))
-      //console.log(generateRowsForCityWithId(data, "2021-03-03", filterByDate, createData))
-      setRows(generateRowsForCityWithId(data, "2021-03-05", filterByDate, createData))
-    }
-  }, [data])
+      setDates(uniqueDates(dates(data)))
+      setRows(generateRowsForCityWithId(data, date, filterByDate, createData))
+  }, [date])
 
   return (
+    <div>
     <TableContainer component={Paper}>
       <Table className={classes.table} size="small" aria-label="a dense table">
         <TableHead>
@@ -104,5 +88,7 @@ export default function DenseTable(props) {
         </TableBody>
       </Table>
     </TableContainer>
+      {(data) ? <DateButtons dates={datesArr} setDate={setDate}/> : <div></div>}
+    </div>
   );
 }
