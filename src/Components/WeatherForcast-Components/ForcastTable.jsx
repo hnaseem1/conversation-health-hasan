@@ -1,5 +1,6 @@
 import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
+import CircularProgress from '@material-ui/core/CircularProgress';
 import Table from "@material-ui/core/Table";
 import TableBody from "@material-ui/core/TableBody";
 import TableCell from "@material-ui/core/TableCell";
@@ -74,23 +75,25 @@ export default function ForecastTable(props) {
             <TableCell align="right">Description</TableCell>
           </TableRow>
         </TableHead>
-        <TableBody>
-          {rows?.map((row) => (
-            <TableRow key={row?.name}>
-              <TableCell component="th" scope="row">
-                {tConvert(row?.date)}
-              </TableCell>
-              <TableCell align="right">{convertKelvinToCelcius(row?.temp)}</TableCell>
-              <TableCell align="right">{convertKelvinToCelcius(row?.minTemp)}</TableCell>
-              <TableCell align="right">{convertKelvinToCelcius((row?.maxTemp))}</TableCell>
-              <TableCell align="right">{windConverter(row?.wind)}</TableCell>
-              <TableCell align="right">{row?.desc}</TableCell>
-            </TableRow>
-          ))}
-        </TableBody>
+          {data ? 
+            <TableBody>
+              {rows?.map((row) => (
+                <TableRow key={row?.name}>
+                  <TableCell component="th" scope="row">
+                    {tConvert(row?.date)}
+                  </TableCell>
+                  <TableCell align="right">{convertKelvinToCelcius(row?.temp)}</TableCell>
+                  <TableCell align="right">{convertKelvinToCelcius(row?.minTemp)}</TableCell>
+                  <TableCell align="right">{convertKelvinToCelcius((row?.maxTemp))}</TableCell>
+                  <TableCell align="right">{windConverter(row?.wind)}</TableCell>
+                  <TableCell align="right">{row?.desc}</TableCell>
+                </TableRow>
+              ))}
+            </TableBody>
+          : <CircularProgress />}
       </Table>
     </TableContainer>
-      {(data) ? <DateButtons dates={datesArr} setDate={setDate}/> : <div></div>}
+      {(data) ? <DateButtons dates={datesArr} setDate={setDate} /> : <CircularProgress />}
     </div>
   );
 }
