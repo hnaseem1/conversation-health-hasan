@@ -1,6 +1,6 @@
-import ForcastTable from "./ForcastTable.jsx";
+import ForcastTable from "./ForcastTable";
 import React from "react";
-import ForcastButton from "./ForcastButton.jsx";
+import ForcastButton from "./ForcastButton";
 export default function ForcastTableWithToggle(props) {
   const [toggle, setToggle] = React.useState(false);
   const data = props.data

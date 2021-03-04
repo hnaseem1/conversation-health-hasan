@@ -15,7 +15,7 @@ export default function DateButtons(props) {
     const setDate = props.setDate
     const classes = useStyles();
     const handleClick = (event) => {
-        setDate(event.target.innerHTML);
+        setDate(event.currentTarget.value);
     };
     
     return (

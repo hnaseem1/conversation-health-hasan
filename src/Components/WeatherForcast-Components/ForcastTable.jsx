@@ -65,9 +65,8 @@ export default function ForecastTable(props) {
     <TableContainer component={Paper}>
       <Table className={classes.table} size="small" aria-label="a dense table">
         <TableHead>
-            <div>{date}</div>
           <TableRow>
-            <TableCell>Date</TableCell>
+              <TableCell>Date: {date}</TableCell>
             <TableCell align="right">Temp</TableCell>
             <TableCell align="right">Min Temp</TableCell>
             <TableCell align="right">Max Temp</TableCell>

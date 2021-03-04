@@ -22,7 +22,7 @@ export default function CityListDropDown(props) {
   const cityJsonList = props.data;
   const setId = props.setId
   const classes = useStyles();
-  const [city, setCity] = React.useState("");
+  const [city, setCity] = React.useState(cityJsonList[0].name);
   const [open, setOpen] = React.useState(false);
 
   const handleChange = (event) => {

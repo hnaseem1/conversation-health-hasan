@@ -27,7 +27,7 @@ const cityList = [
 export default function App() {
   const[weatherData, setWeatherData] = React.useState();
   const[forecastData, setForecastData] = React.useState();
-  const [id, setId] = React.useState(0);
+  const [id, setId] = React.useState(cityList[0].id);
   const useMockService = true
 
   React.useEffect(() => {
