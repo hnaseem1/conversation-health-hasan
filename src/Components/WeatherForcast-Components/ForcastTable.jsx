@@ -8,6 +8,7 @@ import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
 import Paper from "@material-ui/core/Paper";
 import DateButtons from "./DateButtons"
+import { convertKelvinToCelcius, windConverter, tConvert } from "../../Helpers/GlobalHelpers"
 
 const useStyles = makeStyles({
   table: {
@@ -35,7 +36,7 @@ const dates = (data) => data?.list?.map((w) => w?.dt_txt)
 
 const uniqueDates = (datesArray) => {
   const returnObj = {}
-  datesArray.forEach((e) => {
+  datesArray?.forEach((e) => {
     const key = e.split(" ")[0]
     if (returnObj[key]) {
       returnObj[key] = 0
@@ -63,6 +64,7 @@ export default function ForecastTable(props) {
     <TableContainer component={Paper}>
       <Table className={classes.table} size="small" aria-label="a dense table">
         <TableHead>
+            <div>{date}</div>
           <TableRow>
             <TableCell>Date</TableCell>
             <TableCell align="right">Temp</TableCell>
@@ -76,12 +78,12 @@ export default function ForecastTable(props) {
           {rows?.map((row) => (
             <TableRow key={row?.name}>
               <TableCell component="th" scope="row">
-                {row?.date}
+                {tConvert(row?.date)}
               </TableCell>
-              <TableCell align="right">{row?.temp}</TableCell>
-              <TableCell align="right">{row?.minTemp}</TableCell>
-              <TableCell align="right">{row?.maxTemp}</TableCell>
-              <TableCell align="right">{row?.wind}</TableCell>
+              <TableCell align="right">{convertKelvinToCelcius(row?.temp)}</TableCell>
+              <TableCell align="right">{convertKelvinToCelcius(row?.minTemp)}</TableCell>
+              <TableCell align="right">{convertKelvinToCelcius((row?.maxTemp))}</TableCell>
+              <TableCell align="right">{windConverter(row?.wind)}</TableCell>
               <TableCell align="right">{row?.desc}</TableCell>
             </TableRow>
           ))}

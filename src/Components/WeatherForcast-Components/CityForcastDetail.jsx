@@ -1,5 +1,6 @@
 import React from "react";
 import Box from "@material-ui/core/Box";
+import { convertKelvinToCelcius, windConverter } from "../../Helpers/GlobalHelpers"
 
 export default function CityForcastDetail(props) {
   const data = props.data;
@@ -24,9 +25,9 @@ export default function CityForcastDetail(props) {
         m={1}
         bgcolor="background.paper"
       >
-        {data?.main.temp} K
+        {convertKelvinToCelcius(data?.main.temp)}
         <br />
-        Wind {data?.wind.speed} m/sec
+        Wind {windConverter(data?.wind.speed)}
       </Box>
     </div>
   );

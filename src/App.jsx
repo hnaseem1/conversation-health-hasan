@@ -28,11 +28,11 @@ export default function App() {
   const[weatherData, setWeatherData] = React.useState();
   const[forecastData, setForecastData] = React.useState();
   const [id, setId] = React.useState(0);
-  const mockResponse = false
+  const useMockService = true
 
   React.useEffect(() => {
-      getDetails(id, setWeatherData, mockResponse);
-      getCityWeatherDataList(id, setForecastData, mockResponse)
+    getDetails(id, setWeatherData, useMockService);
+    getCityWeatherDataList(id, setForecastData, useMockService)
   }, [id]);
 
   return (
