@@ -21,7 +21,7 @@ export default function DateButtons(props) {
     return (
         <div className={classes.root}>
             {dates?.map((date) => (
-                <Button onClick={handleClick} variant="contained" value={date}>{date}</Button>
+                <Button key={date.split('-')[2]} onClick={handleClick} variant="contained" value={date}>{date}</Button>
             ))}
         </div>
     );

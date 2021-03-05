@@ -4,6 +4,7 @@ import InputLabel from "@material-ui/core/InputLabel";
 import MenuItem from "@material-ui/core/MenuItem";
 import FormControl from "@material-ui/core/FormControl";
 import Select from "@material-ui/core/Select";
+import { cityList } from "../../Helpers/GlobalHelpers";
 
 const useStyles = makeStyles((theme) =>
   createStyles({
@@ -19,15 +20,14 @@ const useStyles = makeStyles((theme) =>
 );
 
 export default function CityListDropDown(props) {
-  const cityJsonList = props.data;
   const setId = props.setId
   const classes = useStyles();
-  const [city, setCity] = React.useState(cityJsonList[0].name);
+  const [city, setCity] = React.useState(cityList[0].name);
   const [open, setOpen] = React.useState(false);
 
   const handleChange = (event) => {
     setCity(event.target.value);
-    setId(event.target.value)
+    setId(event.target.value);
   };
 
   const handleClose = () => {
@@ -51,11 +51,11 @@ export default function CityListDropDown(props) {
           value={city}
           onChange={handleChange}
         >
-          <MenuItem value="">
+          <MenuItem value={1}>
             <em>None</em>
           </MenuItem>
-          {cityJsonList.map((city) => (
-            <MenuItem value={city.id}>{city.name}</MenuItem>
+          {cityList.map((city) => (
+            <MenuItem value={city.id}>{city.name}, {city.country}</MenuItem>
           ))}
         </Select>
       </FormControl>

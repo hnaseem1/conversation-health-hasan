@@ -18,7 +18,7 @@ export default function CityForcastDetail(props) {
         <br />
         {data?.weather[0].description}
       </Box>
-      <Box
+      {(data) ? <Box
         component="span"
         display="block"
         p={1}
@@ -28,7 +28,7 @@ export default function CityForcastDetail(props) {
         {convertKelvinToCelcius(data?.main.temp)}
         <br />
         Wind {windConverter(data?.wind.speed)}
-      </Box>
+      </Box> : <Box></Box>}
     </div>
   );
 }

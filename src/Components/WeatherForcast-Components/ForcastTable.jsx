@@ -17,10 +17,12 @@ const useStyles = makeStyles({
   }
 });
 
+// parses variables into js object
 function createData(date, temp, minTemp, maxTemp, wind, desc) {
   return { date, temp, minTemp, maxTemp, wind, desc };
 }
 
+// Generate table rows using filtered data
 const generateRowsForCityWithId = (data, date, filterHelper, rowCreator) => {
   const filtered = filterHelper(date, data)
   const rows = filtered?.map((row) => {
@@ -29,10 +31,10 @@ const generateRowsForCityWithId = (data, date, filterHelper, rowCreator) => {
   return rows
 }
 
-// filterByDate
+// filterByDate - Filter Data based on the date string provided
 const filterByDate = (date, data) => data?.list?.filter((w) => w?.dt_txt.includes(date))
 
-// findAllDates ["2021-03-03", "2021-03-04", "2021-03-05"]
+// findAllDates - Returns all dates in the data
 const dates = (data) => data?.list?.map((w) => w?.dt_txt)
 
 const uniqueDates = (datesArray) => {
